@@ -1,0 +1,7 @@
+.contenedor{
+  display: grid;
+  grid-template-columns: 100px auto;
+  grid-template-rows: 100px 300px auto;
+  grid-gap: 10px;
+  height: 100vh;
+}
