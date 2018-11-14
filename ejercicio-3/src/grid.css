@@ -1,0 +1,9 @@
+.contenedor{
+  display: grid;
+  grid-template-columns: 300px 200px;
+  /* grid-template-rows: repeat(2, 150px); */
+  /* grid-template: repeat(2, 150px) / 300px 200px; */
+  grid-gap: 10px;
+  grid-auto-rows: 100px;
+  margin: 40px;
+}
