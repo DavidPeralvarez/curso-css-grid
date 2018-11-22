@@ -1,0 +1,29 @@
+.contenedor{
+  display: grid;
+  grid-template-columns: [cabecera-start sidebar-start footer-start] 1fr [sidebar-end contenido-start] 3fr [cabecera-end contenido-end footer-end];
+  grid-template-rows: [cabecera-start] 100px [cabecera-end sidebar-start contenido-start] 1fr [sidebar-end contenido-end footer-start] 50px [footer-end];
+  grid-gap: 5px;
+  min-height: 100vh;
+}
+
+header{
+  background-color: #34495e;
+  color: white;
+  grid-area: cabecera;
+}
+
+aside{
+  background-color: #ffff7e;
+  grid-area: sidebar;
+}
+
+main{
+  background-color: #f89406;
+  grid-area: contenido;
+}
+
+footer{
+  background-color: #9f5afd;
+  color: white;
+  grid-area: footer;
+}
