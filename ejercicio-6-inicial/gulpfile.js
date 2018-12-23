@@ -1,36 +1,46 @@
-/* Dependencias */
+//1- Añadir vendor prefixes
+//2- Concatenar hojas de estilo
+//3- Ejecutar funciones al guardar
+//4- Recargar automáticamente el navegador
+
 var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     concatcss = require('gulp-concat-css'),
-    browserSync = require('browser-sync').create();
+    browsersync = require('browser-sync').create();
 
-/* Tareas
-1- Añadir vendor prefixes
-2- Concatenar
-3- Ejecutar la tarea al guardar
-4- Recargar automáticamente el navegador
-*/
+function estilos(done){
+  gulp.src('./src/*.css')
+      .pipe(autoprefixer({
+        browsers: ['last 4 versions'],
+        flexbox : true,
+        grid : true
+      }))
+      .pipe(concatcss('style.css'))
+      .pipe(gulp.dest('./dist'));
+  done();
+}
 
-gulp.task('servir', ['estilos'], function(){
-  browserSync.init({
-    open: false,
-    server: {
-      baseDir: "./"
+// Recagargar el navegador
+function recargar(done){
+  browsersync.reload();
+  done();
+}
+
+// Servir el contenido
+function servir(done){
+  browsersync.init({
+    server : {
+      baseDir : "./"
     }
   });
-  gulp.watch('./src/*.css', ['estilos']);
-  gulp.watch('./*.html').on('change', browserSync.reload);
-});
+  done();
+}
 
-gulp.task('estilos', function(){
-  return  gulp.src('./src/*.css')
-          .pipe(autoprefixer({
-            browsers: ['last 5 versions'],
-            grid: true
-          }))
-          .pipe(concatcss('style.css'))
-          .pipe(gulp.dest('./dist'))
-          .pipe(browserSync.stream())
-});
+// Observar
+function observar(done){
+  gulp.watch('./src/*.css',gulp.series(estilos,recargar));
+  gulp.watch('./*.html', recargar);
+  done();
+}
 
-gulp.task('default',['servir']);
+gulp.task('default', gulp.series(estilos, servir, observar));
